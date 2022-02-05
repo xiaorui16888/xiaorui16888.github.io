@@ -1,25 +1,17 @@
-name: github pages
-
-on:
-  push:
-    branches:
-    - master
-
+name: Build and Deploy
+on: [push]
 jobs:
-  build-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - run: npm ci
-    - run: npm run build
+    - name: Checkout
+      uses: actions/checkout@master
 
-    #发布到xiaorui16888.github.io/master
-    - name: Deploy xiaorui16888.github.io/master
-      uses: peaceiris/actions-gh-pages@v2
+    - name: Build and Deploy
+      uses: grasilife/github-pages-deploy-action@master
       env:
-        ACTIONS_DEPLOY_KEY: ${{ secrets.ACCESS_TOKEN }}
-        EXTERNAL_REPOSITORY: xiaorui16888/xiaorui16888.github.io #可以新建一个xiaorui16888.github.io仓库发布到master
-        PUBLISH_BRANCH: master
-        PUBLISH_DIR: docs/.vuepress/dist
-      with:
-          emptyCommits: false
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BASE_BRANCH: master # The branch the action should deploy from.
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: build # The folder the action should deploy.
+        BUILD_SCRIPT: npm install && npm run-script build # The build script the action should run prior to deploying.
