@@ -1,16 +1,25 @@
-name: GitHub Actions Build and Deploy Demo
-on: [push]
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@master
+name: fyz-notes
 
-    - name: Build and Deploy
-      uses: JamesIves/github-pages-deploy-action@master
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@master
+
+    - run: npm ci
+
+    # - run: npm run build && node upload
+
+    - run: npm run build
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v2.5.0
       env:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: .vuepress/dist
-        BUILD_SCRIPT: npm install && npm run build
+        ACTIONS_DEPLOY_KEY: ${{ secrets.ACCESS_TOKEN }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: docs/.vuepress/dist
