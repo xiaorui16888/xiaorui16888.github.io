@@ -1,0 +1,23 @@
+<template><h1 id="elasticsearch-kibana设置用户名密码登陆" tabindex="-1"><a class="header-anchor" href="#elasticsearch-kibana设置用户名密码登陆" aria-hidden="true">#</a> ElasticSearch+Kibana设置用户名密码登陆</h1>
+<h2 id="配置" tabindex="-1"><a class="header-anchor" href="#配置" aria-hidden="true">#</a> 配置</h2>
+<p>修改es的配置文件：elasticsearch.yml，添加如下配置</p>
+<div class="language-yaml ext-yml line-numbers-mode"><pre v-pre class="language-yaml"><code><span class="token key atrule">xpack.security.enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span class="token key atrule">xpack.license.self_generated.type</span><span class="token punctuation">:</span> basic
+<span class="token key atrule">xpack.security.transport.ssl.enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>es的bin目录下，执行设置用户名和密码的命令</p>
+<div class="language-bash ext-sh line-numbers-mode"><pre v-pre class="language-bash"><code>./elasticsearch-setup-passwords interactive
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br></div></div><p>这里会设置六个账号的密码：<code>elastic,apm_system,kibana,logstash_system,beats_system,remote_monitoring_user.</code></p>
+<p>修改kibana的配置<code>kibana.yml</code>：</p>
+<div class="language-yaml ext-yml line-numbers-mode"><pre v-pre class="language-yaml"><code><span class="token key atrule">elasticsearch.username</span><span class="token punctuation">:</span> <span class="token string">"elastic"</span>
+<span class="token key atrule">elasticsearch.password</span><span class="token punctuation">:</span> <span class="token string">"bj778899."</span>
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>es修改密码的命令如下：</p>
+<div class="language-bash ext-sh line-numbers-mode"><pre v-pre class="language-bash"><code><span class="token function">curl</span> -H <span class="token string">"Content-Type:application/json"</span> -XPOST -u elastic <span class="token string">'http://localhost:9200/_xpack/security/user/elastic/_password'</span> -d <span class="token string">'{ "password" : "123456" }'</span>
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br></div></div><p>重启es和kibana</p>
+<p>访问http://localhost:9200，需要输入账号密码才可以访问</p>
+<h2 id="集成thinkphp" tabindex="-1"><a class="header-anchor" href="#集成thinkphp" aria-hidden="true">#</a> 集成ThinkPHP</h2>
+<div class="language-php ext-php line-numbers-mode"><pre v-pre class="language-php"><code><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">_initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$hosts</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string single-quoted-string">'http://localhost:8833'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">client</span> <span class="token operator">=</span> <span class="token class-name static-context">ClientBuilder</span><span class="token operator">::</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">setBasicAuthentication</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'elastic'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'bj778899.'</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">setHosts</span><span class="token punctuation">(</span><span class="token variable">$hosts</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div></template>

@@ -1,20 +1,45 @@
+const utils = require('./utils')
 module.exports = {
-  title: 'Guo\'s blog',
-  description: '我的个人网站',
-  head: [ // 注入到当前页面的 HTML <head> 中的标签
-    ['link', { rel: 'icon', href: '/logo.jpg' }], // 增加一个自定义的 favicon(网页标签的图标)
+  title: 'Guo\'s Log',
+  description: 'Guo\'s Log',
+  head: [
+    ['link', { rel: 'icon', href: `https://github.githubassets.com/favicon.ico` }]
   ],
-  base: '/', // 这是部署到github相关的配置
   markdown: {
-    lineNumbers: false // 代码块显示行号
+    toc: { includeLevel: [2, 3] }, //[[toc]]包含的级别
+    lineNumbers: true // 代码块显示行号
   },
   themeConfig: {
-    nav:[ // 导航栏配置
-      {text: '前端基础', link: '/accumulate/' },
-      {text: '算法题库', link: '/algorithm/'},
-      {text: '微博', link: 'https://baidu.com'}      
+    nav: [
+      { text: '引擎', link: '/engine/' },
+      { text: 'PHP', link: '/php/' },
+      { text: '机器人', link: '/robot/' },
     ],
-    sidebar: 'auto', // 侧边栏配置
-    sidebarDepth: 2, // 侧边栏显示2级
+    sidebar: utils.inferSiderbars(),
+    repo: 'https://github.com/xiaorui16888',
+    // 如果你的文档不在仓库的根部
+    docsDir: 'docs',
+    // 可选，默认为 master
+    docsBranch: 'master',
+    // 默认为 true，设置为 false 来禁用
+    editLinks: true,
+    sidebarDepth: 1,
+    lastUpdated: 'Last Updated', // 文档更新时间：每个文件git最后提交的时间
+  },
+  configureWebpack: (config, isServer) => {
+    if (!isServer) {
+      return {
+        resolve: {
+          alias: {
+            '@public': './public'
+          }
+        },
+        devServer: {
+          open: true,
+          hot: true,
+          https: true
+        }
+      }
+    }
   }
-};
+}
