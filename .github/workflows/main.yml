@@ -9,13 +9,11 @@ jobs:
     - uses: actions/checkout@v1
     - run: npm ci  --force
     - run: npm run build
-
-    - name: Deploy xiaorui16888.github.io/master
-      uses: peaceiris/actions-gh-pages@v2
-      env:
-        ACTIONS_DEPLOY_KEY: ${{ secrets.GITHUB_TOKEN }}
-        EXTERNAL_REPOSITORY: xiaorui16888/xiaorui16888.github.io 
-        PUBLISH_BRANCH: master
-        PUBLISH_DIR: docs/.vuepress/dist
+          
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
-          emptyCommits: false
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: docs/.vuepress/dist # The folder the action should deploy.
+
