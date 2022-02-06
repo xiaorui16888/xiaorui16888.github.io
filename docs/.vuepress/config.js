@@ -11,9 +11,7 @@ module.exports = {
   },
   themeConfig: {
     nav: [
-      { text: '引擎', link: '/engine/' },
-      { text: 'PHP', link: '/php/' },
-      { text: '机器人', link: '/robot/' },
+      { text: '笔记', link: '/Notes/' }
     ],
     sidebar: utils.inferSiderbars(),
     repo: 'https://github.com/xiaorui16888',
