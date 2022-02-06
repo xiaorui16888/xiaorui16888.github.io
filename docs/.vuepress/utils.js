@@ -2,9 +2,7 @@ const path = require('path')
 const fs = require('fs')
 
 const sidebarMap = [
-  { title: '引擎', dirname: 'engine', flag: 0,collapsable: true},
-  { title: 'PHP', dirname: 'php', flag: 0, collapsable: true },
-  { title: '机器人', dirname: 'robot', flag: 0, collapsable: true },
+  { title: '笔记', dirname: 'Notes', flag: 0,collapsable: true},
 ]
 exports.inferSiderbars = () => {
   const sidebar = {}
