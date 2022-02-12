@@ -3,6 +3,7 @@ const fs = require('fs')
 
 const sidebarMap = [
   { title: '笔记', dirname: 'Notes', flag: 0,collapsable: true},
+  { title: '随笔', dirname: 'Essay', flag: 0,collapsable: true},
 ]
 exports.inferSiderbars = () => {
   const sidebar = {}

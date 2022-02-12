@@ -11,7 +11,8 @@ module.exports = {
   },
   themeConfig: {
     nav: [
-      { text: '笔记', link: '/Notes/' }
+      { text: '笔记', link: '/Notes/' },
+	  { text: '随笔', link: '/Essay/' }
     ],
     sidebar: utils.inferSiderbars(),
     repo: 'https://github.com/xiaorui16888',
