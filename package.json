@@ -1,5 +1,7 @@
 {
   "devDependencies": {
+    "@vuepress/plugin-back-to-top": "^1.9.7",
+    "@vuepress/plugin-nprogress": "^1.9.7",
     "vuepress": "^1.9.7",
     "Vuepress": "npm:vuepress@^1.9.7"
   },
